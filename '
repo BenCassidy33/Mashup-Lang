@@ -1,0 +1,31 @@
+pub struct Token<'a> {
+    literal: &'a str,
+    token_type: TokenType,
+}
+
+pub enum TokenType {
+    ILLEGAL,
+    UNKNOWN,
+    EOF,
+
+    IDENT,
+    INT,
+    USIZE,
+    STRING,
+
+    ASSIGN,
+    PLUS,
+    MINUS,
+    EQUALS,
+
+    COMMA,
+    SEMICOLON,
+
+    LPAREN,
+    RPAREN,
+    LBRACE,
+    RBRACE,
+
+    FUNCTION,
+    LET,
+}
