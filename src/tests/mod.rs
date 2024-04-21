@@ -224,6 +224,8 @@ mod tests {
     #[test]
     pub fn test_real_file() {
         let input = std::fs::read_to_string("./test_code.mashup").unwrap();
-        println!("{}", input);
+        println!("Need to impliment");
+
+        assert_eq!(1, 1);
     }
 }
