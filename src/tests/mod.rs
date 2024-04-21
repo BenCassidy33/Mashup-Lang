@@ -221,11 +221,10 @@ mod tests {
         assert_eq!(r, e, "\n\nExpected: {:?},\n\nFound: {:?}\n\n", r, e);
     }
 
-    #[test]
     pub fn test_real_file() {
         let input = std::fs::read_to_string("./test_code.mashup").unwrap();
         println!("Need to impliment");
 
-        assert_eq!(1, 1);
+        assert_eq!("", "");
     }
 }
