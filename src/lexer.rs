@@ -118,19 +118,19 @@ impl<'a> Lexer<'a> {
         let raw = self.read_to_eof();
 
         for item in raw {
-            let token = Lexer::tokenize(item);
-            tokens.push(token);
+            let token_type = Lexer::generate_token_type(item.clone());
+
+            tokens.push(Token {
+                token_type,
+                literal: item,
+            });
         }
 
         return tokens;
     }
 
-    pub fn tokenize<'b>(input: String) -> Token<'b> {
-        todo!()
-    }
-
-    pub fn generate_token_type(input: &str) -> TokenType {
-        return match input {
+    pub fn generate_token_type(input: String) -> TokenType {
+        return match input.as_str() {
             "int" => TokenType::INT,
             "float" => TokenType::FLOAT,
             "usize" => TokenType::USIZE,
@@ -163,11 +163,16 @@ impl<'a> Lexer<'a> {
             "{" => TokenType::LBRACE,
             "}" => TokenType::RBRACE,
 
-            other => {
+            "fun" => TokenType::FUNCTION,
+            "yeild" => TokenType::YEILD,
+            "let" => TokenType::LET,
+            "then" => TokenType::THEN,
+
+            _ => {
                 if !input.is_ascii() {
                     return TokenType::ILLEGAL;
                 } else {
-                    return TokenType::IDENT(other);
+                    return TokenType::IDENT(input.clone());
                 }
             }
         };

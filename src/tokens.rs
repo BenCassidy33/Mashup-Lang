@@ -1,15 +1,15 @@
 #[derive(Debug, PartialEq)]
-pub struct Token<'a> {
-    pub token_type: TokenType<'a>,
+pub struct Token {
+    pub token_type: TokenType,
     pub literal: String,
 }
 
 #[derive(Debug, PartialEq, Clone)]
-pub enum TokenType<'a> {
+pub enum TokenType {
     ILLEGAL,
     EOF,
 
-    IDENT(&'a str),
+    IDENT(String),
 
     INT,
     FLOAT,
@@ -67,4 +67,7 @@ pub enum TokenType<'a> {
     POW,
     SQRT,
     MOD,
+
+    RETURN,
+    THEN,
 }

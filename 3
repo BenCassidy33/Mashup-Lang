@@ -218,12 +218,6 @@ mod tests {
 
         let mut l = Lexer::new(&mut i);
         let r = l.read_and_tokenize_input();
-        assert_eq!(r, e, "\n\nExpected: {:?},\n\nFound: {:?}\n\n", r, e);
-    }
-
-    #[test]
-    pub fn test_real_file() {
-        let input = std::fs::read_to_string("./test_code.mashup").unwrap();
-        println!("{}", input);
+        assert_eq!(r, e, "Found: {:#?}, Expected: {:#?}", r, e);
     }
 }

@@ -1,0 +1,16 @@
+fun main = (argc: int, argv: [dynamic; string]) : int; do
+    let first: [static 5; int] = [1, 2, 3, 4, 5];
+    let second: [static auto; int] = [1, 2, 3, 4, 5];
+
+    first :: append with 6;
+    first :: remove with 6;
+
+
+    if (true == false); then
+        println "How did you get here";
+    else if (true == true); then
+        println "I'm coming home, Ace.";
+    else; then
+        println "How did you get here?";
+    endif;
+end;

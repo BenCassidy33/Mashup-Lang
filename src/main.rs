@@ -12,21 +12,14 @@ fn main() {
 }
 
 pub fn read_test2() {
-    let mut i = String::from(
-        "
-            fun fib = rec (num: int) : int; do
-                nums_list :: append match num with n 
-                | 0 -> 0;
-                | 1 -> 1;
-                | _ -> fib(n - 1) + fib(n - 2);
-            end;",
-    );
+    let mut input = std::fs::read_to_string("./src/tests/test_code.mashup").unwrap();
+    let mut l = Lexer::new(&mut input);
+    let r = l.read_and_tokenize_input();
 
-    let e = vec!["if", "i", "==", "3", "->", "yeild", "fruit", ";"];
+    println!("{}", input);
+    println!("Results: {:#?}", r);
 
-    let mut l = Lexer::new(&mut i);
-    let r = l.read_to_eof();
-    println!("{:?}", r);
+    todo!("Add in more token parsing, update so that numbers can be identified as numebrs.");
 }
 
 fn print_type<T>(_: &T) -> &str {
