@@ -1,20 +1,37 @@
+#[derive(Debug, PartialEq)]
 pub struct Token<'a> {
-    literal: &'a str,
-    token_type: TokenType,
+    pub token_type: TokenType<'a>,
+    pub literal: String,
 }
 
-pub enum TokenType {
+#[derive(Debug, PartialEq, Clone)]
+pub enum TokenType<'a> {
     ILLEGAL,
     EOF,
 
-    IDENT(String),
+    IDENT(&'a str),
+
     INT,
+    FLOAT,
     USIZE,
     STRING,
+    BOOL,
+    CHAR,
+    VOID,
+
+    STRUCT,
+    ENUM,
+
+    F_STRING,
+
+    STATIC,
+    DYNAMIC,
+    AUTO,
+
+    SOME,
+    NONE,
 
     ASSIGN,
-    PLUS,
-    MINUS,
     EQUALS,
 
     COMMA,
@@ -29,4 +46,25 @@ pub enum TokenType {
 
     FUNCTION,
     LET,
+    MUT,
+    PRED,
+    IF,
+    YEILD,
+    DO,
+    END,
+    NOT,
+
+    BAR,
+
+    RIGHT_ARROW,
+    LEFT_ARROW,
+    DOUBLE_COLON,
+
+    ADD,
+    SUB,
+    MULT,
+    DIV,
+    POW,
+    SQRT,
+    MOD,
 }

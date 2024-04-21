@@ -118,15 +118,20 @@ impl<'a> Lexer<'a> {
         let raw = self.read_to_eof();
 
         for item in raw {
-            let token = Lexer::tokenize(item);
+            let token = Lexer::tokenize(&item);
             tokens.push(token);
         }
 
         return tokens;
     }
 
-    pub fn tokenize<'b>(input: String) -> Token<'b> {
-        todo!()
+    pub fn tokenize<'b>(input: &'b str) -> Token<'b> {
+        let token_type = Lexer::generate_token_type(&input);
+
+        return Token {
+            literal: &input,
+            token_type,
+        };
     }
 
     pub fn generate_token_type(input: &str) -> TokenType {
