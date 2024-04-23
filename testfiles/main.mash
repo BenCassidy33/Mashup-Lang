@@ -1,0 +1,22 @@
+// all code is experimental and is VERY MUCH SUBJECT TO CHANGE. DO NOT EXPECT FINAL PRODUCT TO LOOK LIKE THIS.
+
+using std:io:[TcpStream];
+
+fun main = (); do 
+
+    let messages: [dynamic; string] = [];
+
+    let reader: TcpStream = TcpStream.reader::new();
+    let writer: TcpStream = TcpStream.writer::new();
+        
+    loop; do
+    let msg: Result = messages::try_append(reader::read()); // will return Err if inner value is not of the correct type or if the inner value is None
+    
+        msg::unwrap_callback((e: Error) {
+            writer::write(writer.author, "Could not write data");
+            continue;
+        });
+
+        writer::write(writer.all, messages[-1]);
+    end;
+end;

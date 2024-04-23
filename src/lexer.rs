@@ -113,7 +113,7 @@ impl<'a> Lexer<'a> {
         return lines;
     }
 
-    pub fn read_and_tokenize_input(&mut self) -> Vec<Token> {
+    pub fn lex(&mut self) -> Vec<Token> {
         let mut tokens = Vec::new();
         let raw = self.read_to_eof();
 

@@ -16,7 +16,7 @@
 - Structs
 - Enums
 - void: no type / void
-- Some and Result types: A wrapper type that has an inner value of a standard type they can either be Some(inner value), None or Ok(inner value), Err
+- Option and Result types: A wrapper type that has an inner value of a standard type they can either be Some(inner value), None or Ok(inner value), Err
 ```
 
 # Basic Syntax
@@ -254,5 +254,20 @@ println f"What was the name of that book? Oh, yea { i_dont_read :: get_title sel
 // prints: What was the name of that book? Oh, yea LOTR.
 ```
 
-To-Do:
-Predicates
+Experiemntal Ideas:
+
+### Type Methods (Likelyhood: High)
+
+Properties on a type are accessed with a `.` and
+functions on a type are accessed with a `::`
+
+Example:
+
+```
+let reader: TcpStream = TcpStream.reader::new();
+let writer: TcpStream = TcpStream.writer::new();
+```
+
+### Named Tuples and Destructuring (Likelyhood: Low)
+
+Each element in a tuple that can have a name will otherwise will be assigned a number
