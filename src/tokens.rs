@@ -8,6 +8,7 @@ pub struct Token {
 pub enum TokenType {
     ILLEGAL,
     EOF,
+    EOL,
 
     IDENT(String),
 
@@ -70,4 +71,6 @@ pub enum TokenType {
 
     RETURN,
     THEN,
+
+    COMMENT,
 }

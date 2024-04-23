@@ -24,7 +24,7 @@ impl<'a> Default for Lexer<'_> {
 
 impl<'a> Lexer<'a> {
     pub fn new(input: &mut String) -> Lexer<'_> {
-        let _ = input.retain(|c| c != '\n');
+        //let _ = input.retain(|c| c != '\n');
 
         return Lexer {
             input,
@@ -58,6 +58,10 @@ impl<'a> Lexer<'a> {
             let curr = self.char_under_cusor();
 
             if curr.is_ascii_whitespace() {
+                if curr == '\n' as u8 {
+                    let _ = self.increment_cursor();
+                    return (characters, Some(()));
+                }
                 break;
             } else if u8::is_special_character(curr) {
                 characters.push(curr);
@@ -79,7 +83,7 @@ impl<'a> Lexer<'a> {
         loop {
             let (token, has_special) = self.read_to_whitespace_or_special();
 
-            if has_special.is_some() {
+            if has_special.is_some() && token.len() > 0 {
                 let left = token[0..token.len() - 1].to_vec().to_string().unwrap();
                 let right = (token[token.len() - 1] as char).to_string();
 
@@ -102,11 +106,6 @@ impl<'a> Lexer<'a> {
         let mut lines = Vec::new();
 
         while self.cursor_pos < self.size - 1 {
-            println!(
-                "Cursor Position: {:?}, Size: {:?}",
-                self.cursor_pos, self.size
-            );
-
             lines.append(&mut self.read_to_eol());
         }
 
@@ -167,6 +166,7 @@ impl<'a> Lexer<'a> {
             "yeild" => TokenType::YEILD,
             "let" => TokenType::LET,
             "then" => TokenType::THEN,
+            "//" => TokenType::COMMENT,
 
             _ => {
                 if !input.is_ascii() {
