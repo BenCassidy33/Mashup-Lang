@@ -217,7 +217,7 @@ mod tests {
         ];
 
         let mut l = Lexer::new(&mut i);
-        let r = l.read_and_tokenize_input();
+        let r = l.lex();
         assert_eq!(r, e, "\n\nExpected: {:?},\n\nFound: {:?}\n\n", r, e);
     }
 
