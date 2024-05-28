@@ -1,6 +1,6 @@
 use std::{collections::HashSet, fmt::format, string::FromUtf8Error};
 
-pub const SPECIAL_CHARACTERS: [char; 9] = ['(', ')', '{', '}', '[', ']', ';', ',', ':'];
+pub const SPECIAL_CHARACTERS: [char; 10] = ['(', ')', '{', '}', '[', ']', ';', ',', ':', '.'];
 
 pub trait SpecialImplmentation {
     fn is_special_character(ch: u8) -> bool;

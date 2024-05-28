@@ -131,8 +131,9 @@ impl<'a> Lexer<'a> {
     pub fn lex(&mut self) -> Vec<Token> {
         let mut tokens = Vec::new();
         let mut pos = 0;
+        let lines = self.read_to_eof();
 
-        for item in self.read_to_eof().into_iter() {
+        for item in lines.into_iter() {
             let n = &item.len();
             let token_type = Lexer::generate_token_type(&item);
 

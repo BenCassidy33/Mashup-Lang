@@ -1,4 +1,4 @@
-// all code is experimental and is VERY MUCH SUBJECT TO CHANGE. DO NOT EXPECT FINAL PRODUCT TO LOOK LIKE THIS.
+/ all code is experimental and is VERY MUCH SUBJECT TO CHANGE. DO NOT EXPECT FINAL PRODUCT TO LOOK LIKE THIS.
 
 using std:io:[TcpStream];
 

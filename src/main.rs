@@ -131,10 +131,7 @@ fn main() {
         exit(1);
     }
 
-    let mut f = file.unwrap();
-
-    let mut lexer = Lexer::new(&mut f);
-    println!("{:#?}", lexer.lex());
-
+    let mut lexer = Lexer::new(&mut file.unwrap()).lex();
+    println!("{:?}", lexer);
     todo!("Implement newline tokens.");
 }
