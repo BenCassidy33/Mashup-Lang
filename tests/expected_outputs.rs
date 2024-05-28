@@ -1,4 +1,4 @@
-use crate::tokens::*;
+use lang::tokens::*;
 
 #[rustfmt::skip]
 pub fn expected_token_test() -> Vec<Token> {

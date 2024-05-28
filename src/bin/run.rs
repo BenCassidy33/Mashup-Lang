@@ -1,16 +1,7 @@
 #![allow(warnings)]
 
-pub mod ast;
-pub mod lexer;
-pub mod macros;
-pub mod tests;
-pub mod tokens;
-pub mod utils;
-
-use lexer::Lexer;
+use lang::{lexer::Lexer, tokens::Token, utils::Colors};
 use std::{panic, path::Path, process::exit};
-
-use crate::utils::Colors;
 
 struct ArgOption {
     short: &'static str,

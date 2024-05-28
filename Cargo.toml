@@ -7,8 +7,5 @@ edition = "2021"
 
 [dependencies]
 
-[lib]
-proc-macro = true
-
 [dev-dependencies]
 trybuild = "1.0.96"

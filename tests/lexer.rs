@@ -1,9 +1,7 @@
-pub mod expected_outputs;
-
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use crate::{lexer::*, tokens::*};
+    use crate::expected_outputs;
+    use lang::{lexer::*, tokens::*};
 
     #[test]
     pub fn test_char_read() {
@@ -213,4 +211,16 @@ mod tests {
     //     println!("Need to impliment");
     //     assert_eq!(1, 2);
     // }
+}
+
+mod expected_outputs {
+    use lang::tokens::*;
+
+    pub fn expected_token_test() -> Vec<Token> {
+        todo!()
+    }
+
+    pub fn expected_token_test_2() -> Vec<Token> {
+        todo!()
+    }
 }
