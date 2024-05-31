@@ -1,7 +1,8 @@
 #[cfg(test)]
 mod tests {
     use crate::expected_outputs;
-    use lang::{lexer::*, tokens::*};
+    use lang::lexer::Lexer;
+    use lang::utils::tokens::*;
 
     #[test]
     pub fn test_char_read() {
@@ -214,7 +215,7 @@ mod tests {
 }
 
 mod expected_outputs {
-    use lang::tokens::*;
+    use lang::utils::tokens::Token;
 
     pub fn expected_token_test() -> Vec<Token> {
         todo!()

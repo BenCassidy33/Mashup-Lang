@@ -1,6 +1,6 @@
 #![allow(warnings)]
 
-use lang::{lexer::Lexer, tokens::Token, utils::Colors};
+use lang::{lexer::Lexer, utils::Colors, utils::Token};
 use std::{panic, path::Path, process::exit};
 
 struct ArgOption {

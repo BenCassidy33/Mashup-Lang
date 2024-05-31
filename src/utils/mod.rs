@@ -1,6 +1,8 @@
 pub mod macros;
 pub mod tokens;
-pub mod utils;
+
+pub use macros::*;
+pub use tokens::*;
 
 pub const SPECIAL_CHARACTERS: [char; 10] = ['(', ')', '{', '}', '[', ']', ';', ',', ':', '.'];
 
