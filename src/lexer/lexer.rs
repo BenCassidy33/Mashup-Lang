@@ -3,7 +3,7 @@
 use std::collections::{hash_set, HashSet};
 use std::process::exit;
 
-use crate::tokens::{Token, TokenType};
+use crate::utils::tokens::{Token, TokenType};
 use crate::utils::{self, SpecialImplmentation, VecU8Impl, SPECIAL_CHARACTERS};
 
 pub struct Lexer<'a> {
