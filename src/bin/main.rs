@@ -1,7 +1,13 @@
 #![allow(warnings)]
 
-use lang::{lexer::Lexer, utils::Colors, utils::Token};
+use lang::{lexer::Lexer, parser::parser::test_tree, utils::Colors, utils::Token};
 use std::{panic, path::Path, process::exit};
+
+#[derive(Default)]
+struct CompilerOptions {
+    filename: String,
+    out_dir: String,
+}
 
 struct ArgOption {
     short: &'static str,
@@ -26,6 +32,11 @@ fn check_argument_conflicts(arg: &String, options: &Vec<ArgOption>) -> ArgConfli
 const HELP: &'static str = "Use '-h' or '--help' for help.";
 
 fn main() {
+    let mut compiler_options = CompilerOptions {
+        filename: "".to_string(),
+        out_dir: "".to_string(),
+    };
+
     panic::set_hook(Box::new(|e| {
         println!("{}\n", e);
     }));
@@ -46,6 +57,14 @@ fn main() {
             },
             conflicts: None,
         },
+        ArgOption {
+            short: "-o",
+            long: "--out",
+            callback: || {
+                todo!();
+            },
+            conflicts: None,
+        },
     ];
 
     let args: Vec<String> = std::env::args().collect::<Vec<String>>()[1..].to_vec();
@@ -59,7 +78,7 @@ fn main() {
         exit(0);
     }
 
-    let file = || -> &Path {
+    let mut file = || -> &Path {
         for arg in args.iter() {
             if Path::new(arg).exists() && Path::new(arg).is_file() {
                 if !arg.ends_with("mash") {
@@ -69,6 +88,7 @@ fn main() {
                     );
                     exit(1);
                 }
+                compiler_options.filename = arg.to_string();
                 return Path::new(arg);
             }
         }
@@ -112,18 +132,57 @@ fn main() {
         exit(1);
     }
 
-    let mut file = std::fs::read_to_string(file());
+    let mut input_file = std::fs::read_to_string(file());
 
-    if file.is_err() {
+    if input_file.is_err() {
         eprintln!(
             "\n{}: Could not read file: {}",
             "Compliation Error".red(),
-            file.err().unwrap()
+            input_file.err().unwrap()
         );
         exit(1);
     }
 
-    let mut lexer = Lexer::new(&mut file.unwrap()).lex();
-    println!("{:?}", lexer);
-    todo!("Implement newline tokens.");
+    if file().file_name().is_none() {
+        eprintln!(
+            "\n{}: Could not get file name: {}",
+            "Compliation Error".red(),
+            file().display()
+        );
+        exit(1);
+    } else {
+        compiler_options.filename = file()
+            .file_name()
+            .unwrap()
+            .to_str()
+            .unwrap()
+            .to_string()
+            .split(".")
+            .collect::<Vec<&str>>()[0]
+            .to_string();
+    };
+
+    let tokens = Lexer::new(&mut input_file.unwrap()).lex();
+
+    if compiler_options.out_dir.is_empty() {
+        std::fs::write(
+            format!("./{}.ll", compiler_options.filename),
+            format!("{:#?}", tokens),
+        );
+        println!(
+            "{}: {}",
+            "Output".green(),
+            format!("./{}.ll", compiler_options.filename)
+        );
+    } else {
+        std::fs::write(
+            format!(
+                "{}/{}.ll",
+                compiler_options.out_dir, compiler_options.filename
+            ),
+            format!("{:#?}", tokens),
+        );
+    }
+
+    test_tree();
 }

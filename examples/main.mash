@@ -1,5 +1,3 @@
-/* all code is experimental and is VERY MUCH SUBJECT TO CHANGE. DO NOT EXPECT FINAL LANGUAGE DESIGN. */
-
 using std:io:[TcpStream];
 
 fun main = (); do 

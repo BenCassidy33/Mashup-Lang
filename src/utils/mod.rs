@@ -1,7 +1,6 @@
 pub mod macros;
 pub mod tokens;
 
-
 pub use tokens::*;
 
 pub const SPECIAL_CHARACTERS: [char; 10] = ['(', ')', '{', '}', '[', ']', ';', ',', ':', '.'];
@@ -29,6 +28,7 @@ impl VecU8Impl for Vec<u8> {
 pub trait Colors {
     fn red(&self) -> String;
     fn yellow(&self) -> String;
+    fn green(&self) -> String;
 }
 
 impl Colors for &'static str {
@@ -38,5 +38,9 @@ impl Colors for &'static str {
 
     fn yellow(&self) -> String {
         return format!("\x1b[93m{}\x1b[0m", self);
+    }
+
+    fn green(&self) -> String {
+        return format!("\x1b[92m{}\x1b[0m", self);
     }
 }

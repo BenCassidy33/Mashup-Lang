@@ -22,13 +22,6 @@ pub struct Token {
     pub end: usize,
 }
 
-#[derive(Debug)]
-pub struct Tok {
-    pub token: String,
-    pub start: usize,
-    pub end: usize,
-}
-
 #[derive(Debug, PartialEq, Clone)]
 #[allow(non_camel_case_types)]
 pub enum TokenType {

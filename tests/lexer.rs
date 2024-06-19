@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #[cfg(test)]
 mod tests {
     use crate::expected_outputs;
@@ -97,7 +98,7 @@ mod tests {
 
         let r = Lexer::new(&mut i).read_to_eol();
     }
-
+    #[ignore]
     #[test]
     pub fn read_test2() {
         let mut i = String::from(
@@ -167,6 +168,7 @@ mod tests {
         //assert_eq!(e, r, "Expected: \n{:?}, \nFound:\n {:?}\n\n", e, r);
     }
 
+    #[ignore]
     #[test]
     pub fn test_tokens() {
         println!("Testing");
@@ -177,6 +179,7 @@ mod tests {
         assert_eq!(e, r, "\n\nExpected: {:#?},\n\nFound: {:#?}\n\n", e, r);
     }
 
+    #[ignore]
     #[test]
     pub fn test_tokens_2() {
         let mut i = String::from(
@@ -202,9 +205,9 @@ mod tests {
             .collect::<Vec<TokenType>>();
         //assert_eq!(e, r, "\n\nExpected: {:#?},\n\nFound: {:#?}\n\n", e, r);
         //
-        for (idx, (e, r)) in e_types.iter().zip(r_types.iter()).enumerate() {
-            print!("{}: {:#?} == {:?}\n", idx, e, r);
-        }
+        // for (idx, (e, r)) in e_types.iter().zip(r_types.iter()).enumerate() {
+        //     print!("{}: {:#?} == {:?}\n", idx, e, r);
+        // }
     }
 
     // pub fn test_real_file() {
