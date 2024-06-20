@@ -38,8 +38,6 @@ impl<'a> Default for Lexer<'_> {
 
 impl<'a> Lexer<'a> {
     pub fn new(input: &mut String) -> Lexer<'_> {
-        //let _ = input.retain(|c| c != '\n');
-
         return Lexer {
             input,
             size: input.len(),

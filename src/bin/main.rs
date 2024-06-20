@@ -33,8 +33,7 @@ const HELP: &'static str = "Use '-h' or '--help' for help.";
 
 fn main() {
     let mut compiler_options = CompilerOptions {
-        filename: "".to_string(),
-        out_dir: "".to_string(),
+        ..Default::default()
     };
 
     panic::set_hook(Box::new(|e| {
@@ -64,6 +63,12 @@ fn main() {
                 todo!();
             },
             conflicts: None,
+        },
+        ArgOption {
+            short: "-oFE",
+            long: "--overrideFileExtension",
+            conflicts: None,
+            callback: || {},
         },
     ];
 
