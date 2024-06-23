@@ -1,7 +1,12 @@
 #![allow(warnings)]
 
 use lang::{lexer::Lexer, parser::parser::test_tree, utils::Colors, utils::Token};
-use std::{panic, path::Path, process::exit};
+use std::{
+    hash::{DefaultHasher, Hash, Hasher},
+    panic,
+    path::Path,
+    process::exit,
+};
 
 #[derive(Default)]
 struct CompilerOptions {
@@ -9,6 +14,7 @@ struct CompilerOptions {
     out_dir: String,
 }
 
+#[derive(Hash)]
 struct ArgOption {
     short: &'static str,
     long: &'static str,
