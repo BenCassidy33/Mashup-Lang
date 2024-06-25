@@ -1,6 +1,6 @@
 # Mashup Lang
 
-### This is a personal project of my own to learn about how programming languages work
+## THIS PROJECT IS IN CURRENTLY IN PROGRESS
 
 ## Types:
 
