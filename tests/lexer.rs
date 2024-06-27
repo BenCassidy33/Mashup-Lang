@@ -4,6 +4,7 @@ mod tests {
     use crate::expected_outputs;
     use lang::lexer::Lexer;
     use lang::utils::tokens::*;
+    use pretty_assertions::assert_eq;
 
     #[test]
     pub fn test_char_read() {
@@ -203,11 +204,9 @@ mod tests {
             .iter()
             .map(|f| f.token_type.clone())
             .collect::<Vec<TokenType>>();
-        //assert_eq!(e, r, "\n\nExpected: {:#?},\n\nFound: {:#?}\n\n", e, r);
-        //
-        // for (idx, (e, r)) in e_types.iter().zip(r_types.iter()).enumerate() {
-        //     print!("{}: {:#?} == {:?}\n", idx, e, r);
-        // }
+        for (idx, (e, r)) in e_types.iter().zip(r_types.iter()).enumerate() {
+            print!("{}: {:#?} == {:?}\n", idx, e, r);
+        }
     }
 
     // pub fn test_real_file() {

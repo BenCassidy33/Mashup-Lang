@@ -38,7 +38,7 @@ strings - extra functions for working with strings and chars
 Variables are simple and are smiliar to most other programming languages:
 
 ```
-let hello_world: [static auto; string] = "Hello World!"; // u8 char array under the hood; auto indicates the program is determining the size of the array
+let hello_world: string = "Hello World!"; // u8 char array under the hood; auto indicates the program is determining the size of the array
 let age: mut int = 5;
 
 println f"{hello_world}"; // prints "Hello World" to the console

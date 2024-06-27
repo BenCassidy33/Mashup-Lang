@@ -1,6 +1,6 @@
 #![allow(warnings)]
 
-use lang::{lexer::Lexer, parser::parser::test_tree, utils::Colors, utils::Token};
+use lang::{lexer::Lexer, utils::Colors, utils::Token};
 use std::{
     hash::{DefaultHasher, Hash, Hasher},
     panic,
@@ -194,6 +194,4 @@ fn main() {
             format!("{:#?}", tokens),
         );
     }
-
-    test_tree();
 }

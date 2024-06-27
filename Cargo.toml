@@ -5,4 +5,5 @@ edition = "2021"
 default-run = "main"
 
 [dev-dependencies]
-trybuild = "1.0.96"
+pretty_assertions = {version = "*"}
+
