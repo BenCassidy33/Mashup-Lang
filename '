@@ -101,11 +101,11 @@ impl Parser {
             ..Default::default()
         };
 
-        let mut type_token: Vec<&TokenType> = Vec::new();
-        let mut value: Vec<&TokenType> = Vec::new();
+        let mut value: Vec<Token> = Vec::new();
 
         let mut name_seen: bool = false;
         let tokens = self.read_to_semicolon();
+        let mut type_token: Vec<&TokenType> = Vec::new();
 
         for (idx, token) in tokens.iter().enumerate() {
             if let TokenType::IDENT(ref name) = token.token_type {
@@ -125,11 +125,7 @@ impl Parser {
                 }
             }
 
-            if token.token_type == TokenType::ASSIGN {
-                tokens[idx..]
-                    .iter()
-                    .for_each(|tok| value.push(&tok.token_type))
-            }
+            if token.token_type == TokenType::ASSIGN {}
         }
 
         println!("name: {:?}, type_token: {:?}", variable.name, type_token);

@@ -1,4 +1,5 @@
 pub mod macros;
+pub mod methods;
 pub mod tokens;
 
 pub use tokens::*;
