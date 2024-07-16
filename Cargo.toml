@@ -1,6 +1,10 @@
 [package]
 name = "lang"
 version = "0.1.0"
+authors = [ "Benjamin Cassidy" ]
+license = "MIT"
+readme = "README"
+
 edition = "2021"
 default-run = "main"
 
