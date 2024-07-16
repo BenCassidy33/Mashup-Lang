@@ -5,5 +5,10 @@ edition = "2021"
 default-run = "main"
 
 [dev-dependencies]
-pretty_assertions = {version = "*"}
+pretty_assertions = { version = "*" }
+trybuild = { version = "*" }
 
+# for dev 
+[lints.rust]
+unused = "allow"
+unused_variables = "allow"
