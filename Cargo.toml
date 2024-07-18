@@ -3,17 +3,18 @@ name = "lang"
 version = "0.1.0"
 authors = ["Benjamin Cassidy <ben.d.cassidy@gmail.com>"]
 license = "MIT"
-license-file = "LICENSE"
 readme = "README.md"
 
 edition = "2021"
 default-run = "main"
 
+[dependencies]
+anyhow = { version = "1.0.86" }
+
 [dev-dependencies]
 pretty_assertions = { version = "*" }
-trybuild = { version = "*" }
 
 # for dev 
 [lints.rust]
-unused = "allow"
 unused_variables = "allow"
+dead_code = "allow"

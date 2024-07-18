@@ -1,8 +1,8 @@
-use std::{any::Any, default};
-
-use crate::{methods::TokenMethods, Token, TokenType};
-
-use super::variable::{Variable, VariableGenerationError, VariableType};
+use super::{
+    constructs,
+    variable::{Variable, VariableGenerationError, VariableTypeId, VariableTypeLiteral},
+};
+use crate::{Token, TokenType};
 
 #[derive(Debug)]
 pub enum BlockScopeError {
@@ -18,13 +18,15 @@ pub struct Parser {
 
 impl Parser {
     pub fn new(tokens: Vec<Token>) -> Self {
-        return Parser {
+        Parser {
             cursor_position: 0,
             tokens,
-        };
+        }
     }
 
-    pub fn parse() {}
+    pub fn parse() {
+        todo!()
+    }
 
     pub fn read_to_semicolon(&mut self) -> &[Token] {
         let start = self.cursor_position;
@@ -34,7 +36,7 @@ impl Parser {
         }
 
         self.increment_cursor();
-        return &self.tokens[start..self.cursor_position];
+        &self.tokens[start..self.cursor_position]
     }
 
     pub fn increment_cursor(&mut self) {
@@ -42,11 +44,11 @@ impl Parser {
     }
 
     pub fn get_token_under_cursor(&self) -> &Token {
-        return &self.tokens[self.cursor_position];
+        &self.tokens[self.cursor_position]
     }
 
     pub fn get_cursor_position(&mut self) -> usize {
-        return self.cursor_position;
+        self.cursor_position
     }
 
     pub fn get_block_scope(
@@ -72,7 +74,6 @@ impl Parser {
             end += 1;
 
             if open_brace == closed_brace {
-                println!("{:?}", end);
                 self.cursor_position = end;
                 return Ok(&self.tokens[start..start + end]);
             }
@@ -82,7 +83,7 @@ impl Parser {
             }
         }
 
-        return Err(BlockScopeError::NoScopeDelimiters);
+        Err(BlockScopeError::NoScopeDelimiters)
     }
 
     pub fn read_to(&mut self, token: &str) -> &[Token] {
@@ -92,7 +93,7 @@ impl Parser {
         }
         self.increment_cursor();
 
-        return &self.tokens[start..self.cursor_position];
+        &self.tokens[start..self.cursor_position]
     }
 
     /// this assumes that the cursor is on the 'let' or 'const' statement
@@ -104,17 +105,9 @@ impl Parser {
         let mut type_token: Vec<&TokenType> = Vec::new();
         let mut value: Vec<&TokenType> = Vec::new();
 
-        let mut name_seen: bool = false;
         let tokens = self.read_to_semicolon();
 
         for (idx, token) in tokens.iter().enumerate() {
-            if let TokenType::IDENT(ref name) = token.token_type {
-                if !name_seen {
-                    variable.name = name.to_string();
-                    name_seen = true;
-                }
-            }
-
             if token.token_type == TokenType::COLON {
                 for tok in &tokens[idx + 1..] {
                     if tok.token_type == TokenType::ASSIGN {
@@ -125,6 +118,10 @@ impl Parser {
                 }
             }
 
+            if token.token_type == TokenType::RESULT {
+                variable.type_id = Self::genereate_inner_type(type_token.clone())?;
+            }
+
             if token.token_type == TokenType::ASSIGN {
                 tokens[idx..]
                     .iter()
@@ -132,14 +129,37 @@ impl Parser {
             }
         }
 
-        println!("name: {:?}, type_token: {:?}", variable.name, type_token);
+        Ok(variable)
 
-        Err(VariableGenerationError::InvalidSyntax)
+        //Err(VariableGenerationError::InvalidSyntax)
     }
 
-    pub fn compact_and_generate_variable_type(
-        tokens: &[Token],
-    ) -> Result<VariableType, VariableGenerationError> {
-        todo!()
+    pub fn genereate_inner_type(
+        tokens: Vec<&TokenType>,
+    ) -> Result<VariableTypeId, VariableGenerationError> {
+        let current_token = tokens[0];
+        println!("Tokens: {:?}, Current Token: {:?}, ", tokens, current_token);
+
+        match current_token {
+            TokenType::RESULT => Ok(VariableTypeId::Result(Box::new(
+                Self::genereate_inner_type(tokens[2..].to_vec()).unwrap(),
+            ))),
+
+            TokenType::VECTOR => Ok(VariableTypeId::Vector(Box::new(
+                Self::genereate_inner_type(tokens[2..].to_vec()).unwrap(),
+            ))),
+
+            TokenType::OPTION => Ok(VariableTypeId::Option(Box::new(
+                Self::genereate_inner_type(tokens[2..].to_vec()).unwrap(),
+            ))),
+
+            _ => Ok(Into::<VariableTypeId>::into(current_token.clone())),
+        }
+    }
+
+    pub fn generate_statement(
+        &mut self,
+    ) -> Result<constructs::Statement, constructs::StatementGenerationError> {
+        todo!("")
     }
 }

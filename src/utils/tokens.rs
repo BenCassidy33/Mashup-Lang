@@ -1,3 +1,5 @@
+use crate::parser::variable::{VariableGenerationError, VariableTypeId};
+
 pub enum ReadWhitespace {
     EOL,
     SPECIAL,
@@ -122,4 +124,29 @@ pub enum TokenType {
 
     TRUE,
     FALSE,
+
+    RESULT,
+    OPTION,
+
+    VECTOR,
+}
+
+impl From<TokenType> for VariableTypeId {
+    fn from(token: TokenType) -> VariableTypeId {
+        println!("{:#?}", token);
+        match token {
+            TokenType::INT => VariableTypeId::Int,
+            TokenType::FLOAT => VariableTypeId::Float,
+            TokenType::USIZE => VariableTypeId::Usize,
+            TokenType::STRING => VariableTypeId::String,
+            TokenType::BOOL => VariableTypeId::Bool,
+            TokenType::CHAR => VariableTypeId::Char,
+            TokenType::VOID => VariableTypeId::Unit,
+            TokenType::RESULT => VariableTypeId::Result(Box::new(VariableTypeId::Unit)),
+            TokenType::OPTION => VariableTypeId::Option(Box::new(VariableTypeId::Unit)),
+            TokenType::VECTOR => VariableTypeId::Vector(Box::new(VariableTypeId::Unit)),
+
+            _ => panic!("invalid type"),
+        }
+    }
 }

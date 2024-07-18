@@ -4,7 +4,8 @@ pub mod tokens;
 
 pub use tokens::*;
 
-pub const SPECIAL_CHARACTERS: [char; 10] = ['(', ')', '{', '}', '[', ']', ';', ',', ':', '.'];
+pub const SPECIAL_CHARACTERS: [char; 12] =
+    ['(', ')', '{', '}', '[', ']', ';', ',', ':', '.', '<', '>'];
 
 pub trait SpecialImplmentation {
     fn is_special_character(ch: u8) -> bool;

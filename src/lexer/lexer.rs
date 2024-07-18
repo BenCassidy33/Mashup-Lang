@@ -24,7 +24,7 @@ impl TokenMethods for Vec<Token> {
     }
 }
 
-impl<'a> Default for Lexer<'_> {
+impl Default for Lexer<'_> {
     fn default() -> Self {
         static EMPTY: String = String::new();
 
@@ -38,11 +38,12 @@ impl<'a> Default for Lexer<'_> {
 
 impl<'a> Lexer<'a> {
     pub fn new(input: &mut String) -> Lexer<'_> {
-        return Lexer {
+        input.push(';'); // fix this later
+        Lexer {
             input,
             size: input.len(),
             ..Default::default()
-        };
+        }
     }
 
     pub fn char_under_cusor(&self) -> u8 {
@@ -51,10 +52,10 @@ impl<'a> Lexer<'a> {
 
     pub fn increment_cursor(&mut self) -> Result<(), &'static str> {
         if self.cursor_pos == self.size - 1 {
-            return Err("Attempt to index cursor out of range.");
+            Err("Attempt to index cursor out of range.")
         } else {
             self.cursor_pos += 1;
-            return Ok(());
+            Ok(())
         }
     }
 
@@ -65,12 +66,13 @@ impl<'a> Lexer<'a> {
     */
     pub fn read_to_whitespace_or_special(&mut self) -> (Vec<u8>, Option<()>) {
         let mut characters = Vec::new();
+        let mut loope = 0;
 
         loop {
             let curr = self.char_under_cusor();
 
             if curr.is_ascii_whitespace() {
-                if curr == '\n' as u8 {
+                if curr == b'\n' {
                     let _ = self.increment_cursor();
                     return (characters, Some(()));
                 }
@@ -86,7 +88,7 @@ impl<'a> Lexer<'a> {
         }
 
         let _ = self.increment_cursor();
-        return (characters, None);
+        (characters, None)
     }
 
     pub fn read_to_eol(&mut self) -> Vec<String> {
@@ -95,7 +97,7 @@ impl<'a> Lexer<'a> {
         loop {
             let (token, has_special) = self.read_to_whitespace_or_special();
 
-            if has_special.is_some() && token.len() > 0 {
+            if has_special.is_some() && !token.is_empty() {
                 let left = token[0..token.len() - 1].to_vec().to_string().unwrap();
                 let right = (token[token.len() - 1] as char).to_string();
 
@@ -121,7 +123,7 @@ impl<'a> Lexer<'a> {
             lines.append(&mut self.read_to_eol());
         }
 
-        return lines;
+        lines
     }
 
     pub fn lex(&mut self) -> Vec<Token> {
@@ -142,10 +144,10 @@ impl<'a> Lexer<'a> {
             pos += n + 1;
         }
 
-        return tokens;
+        tokens
     }
 
-    pub fn generate_token_type<'b>(input: &String) -> TokenType {
+    pub fn generate_token_type(input: &String) -> TokenType {
         return match input.as_str() {
             "int" => TokenType::INT,
             "float" => TokenType::FLOAT,
@@ -212,6 +214,9 @@ impl<'a> Lexer<'a> {
             "LCARET" => TokenType::LCARET,
             "RCARET" => TokenType::RCARET,
             "_" => TokenType::UNDERSCORE,
+            "Result" => TokenType::RESULT,
+            "Option" => TokenType::OPTION,
+            "Vector" => TokenType::VECTOR,
 
             _ if input.parse::<f64>().is_ok()
                 || input.parse::<isize>().is_ok()

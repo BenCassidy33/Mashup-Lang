@@ -1,7 +1,6 @@
 #![allow(warnings)]
 #[cfg(test)]
 mod tests {
-    use crate::expected_outputs;
     use lang::lexer::Lexer;
     use lang::utils::tokens::*;
     use pretty_assertions::assert_eq;
@@ -175,7 +174,7 @@ mod tests {
         println!("Testing");
 
         let mut i = String::from("let add = fun(x,y) -> int; do yeild x + y; end;");
-        let mut e = expected_outputs::expected_token_test();
+        let mut e: Vec<Token> = Vec::new();
         let mut r = Lexer::new(&mut i).lex();
         assert_eq!(e, r, "\n\nExpected: {:#?},\n\nFound: {:#?}\n\n", e, r);
     }
@@ -194,7 +193,7 @@ mod tests {
         );
 
         let mut r = Lexer::new(&mut i).lex();
-        let e = expected_outputs::expected_token_test_2();
+        let e: Vec<Token> = Vec::new();
 
         let r_types = r
             .iter()

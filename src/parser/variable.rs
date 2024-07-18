@@ -1,7 +1,7 @@
 #[derive(PartialEq, Debug)]
 pub struct StructField {
     name: String,
-    type_id: VariableType,
+    type_id: VariableTypeId,
 }
 
 #[derive(PartialEq, Debug)]
@@ -13,7 +13,7 @@ pub struct CustomStruct {
 #[derive(PartialEq, Debug)]
 pub struct EnumField {
     name: String,
-    value: Option<VariableType>,
+    inner_type_id: Option<VariableTypeId>,
 }
 
 #[derive(PartialEq, Debug)]
@@ -27,18 +27,38 @@ pub enum CustomVariableType {
     CustomEnum(CustomEnum),
 }
 
+#[derive(PartialEq, Debug, Default)]
+pub enum VariableTypeId {
+    #[default]
+    Unit,
+    Unassigned,
+    CustomStruct,
+    CustomEnum,
+    Int,
+    Float,
+    Usize,
+    String,
+    Bool,
+    Char,
+    Vector(Box<VariableTypeId>),
+    Result(Box<VariableTypeId>),
+    Option(Box<VariableTypeId>),
+}
+
 #[derive(PartialEq, Default, Debug)]
-pub enum VariableType {
+pub enum VariableTypeLiteral {
+    #[default]
+    Unit,
+    Unassigned,
     CustomStruct(CustomStruct),
     CustomEnum(CustomEnum),
     Int(isize),
     Float(f32),
     Usize(usize),
     String(String),
-    #[default]
-    Unit,
-    Unassigned,
     Vector(Vector),
+    Result(Box<VariableTypeLiteral>),
+    Option(Box<VariableTypeLiteral>),
 }
 
 /**
@@ -63,7 +83,7 @@ pub enum InitalVectorSize {
 
 #[derive(PartialEq, Debug)]
 pub struct Vector {
-    pub type_id: Box<VariableType>,
+    pub type_id: Box<VariableTypeId>,
     pub mutability: VectorMutibility,
     pub inital_size: InitalVectorSize,
 }
@@ -71,7 +91,8 @@ pub struct Vector {
 #[derive(Default, Debug, PartialEq)]
 pub struct Variable {
     pub name: String,
-    pub type_id: VariableType,
+    pub type_id: VariableTypeId,
+    pub value: Option<VariableTypeLiteral>,
     pub mutable: bool,
 }
 
@@ -102,12 +123,12 @@ pub enum TokenTypeGenerationType {
 }
 
 impl Variable {
-    pub fn get_inner_value(&self) -> Result<&VariableType, VariableValueRequestError> {
+    pub fn get_inner_value(&self) -> Result<&VariableTypeId, VariableValueRequestError> {
         match &self.type_id {
-            VariableType::Unassigned => {
+            VariableTypeId::Unassigned => {
                 return Err(VariableValueRequestError::UninitalizedVariable)
             }
-            VariableType::Unit => {
+            VariableTypeId::Unit => {
                 return Err(VariableValueRequestError::NoInnerValue);
             }
 
