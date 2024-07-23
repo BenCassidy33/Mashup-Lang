@@ -8,8 +8,8 @@ readme = "README.md"
 edition = "2021"
 default-run = "main"
 
-[dependencies]
-anyhow = { version = "1.0.86" }
+[build]
+linker = "clang"
 
 [dev-dependencies]
 pretty_assertions = { version = "*" }

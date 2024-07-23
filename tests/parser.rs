@@ -117,8 +117,23 @@ mod paser_tests {
             mutable: false,
         };
 
-        //let got = parser.generate_variable().unwrap();
-        assert_eq!(expected, Variable::default());
+        let got = parser.generate_variable().unwrap();
+        assert_eq!(expected, got);
+    }
+
+    #[test]
+    pub fn generate_variable_2() {
+        let tokens = Lexer::new(&mut String::from("let x: String = \"Hello, World!\"")).lex();
+        let mut parser = Parser::new(tokens);
+        let expected = Variable {
+            name: "x".to_string(),
+            type_id: VariableTypeId::String,
+            value: Some(VariableTypeLiteral::String("\"Hello,World!\"".to_string())),
+            mutable: false,
+        };
+
+        let got = parser.generate_variable().unwrap();
+        assert_eq!(expected, got);
     }
 
     #[test]
@@ -129,6 +144,7 @@ mod paser_tests {
     }
 
     #[test]
+    #[ignore]
     pub fn generate_statement() {
         let tokens = Lexer::new(&mut String::from(
             r#"

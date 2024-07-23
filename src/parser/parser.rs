@@ -108,24 +108,58 @@ impl Parser {
         let tokens = self.read_to_semicolon();
 
         for (idx, token) in tokens.iter().enumerate() {
-            if token.token_type == TokenType::COLON {
-                for tok in &tokens[idx + 1..] {
-                    if tok.token_type == TokenType::ASSIGN {
-                        break;
+            match &token.token_type {
+                TokenType::IDENT(name) => {
+                    if variable.name.is_empty() {
+                        variable.name = name.to_string();
                     }
 
-                    type_token.push(&tok.token_type);
+                    if name.chars().collect::<Vec<char>>()[0] == '\"' {
+                        let mut stri = String::new();
+
+                        for tok in &tokens[idx..] {
+                            println!("{:?}", stri);
+
+                            if tok.token_type == TokenType::SEMICOLON {
+                                variable.type_id = VariableTypeId::String;
+                                println!("STRING: {:?}", stri);
+                                variable.value = Some(VariableTypeLiteral::String(stri.clone()))
+                            }
+                            stri += &tok.literal;
+                        }
+                    }
                 }
-            }
 
-            if token.token_type == TokenType::RESULT {
-                variable.type_id = Self::genereate_inner_type(type_token.clone())?;
-            }
+                TokenType::COLON => {
+                    for tok in &tokens[idx + 1..] {
+                        if tok.token_type == TokenType::ASSIGN {
+                            break;
+                        }
 
-            if token.token_type == TokenType::ASSIGN {
-                tokens[idx..]
-                    .iter()
-                    .for_each(|tok| value.push(&tok.token_type))
+                        type_token.push(&tok.token_type);
+                    }
+                }
+                TokenType::RESULT | TokenType::OPTION | TokenType::VECTOR => {
+                    variable.type_id = Self::genereate_inner_type(type_token.clone())?;
+                }
+
+                TokenType::ASSIGN => {
+                    continue;
+                }
+
+                TokenType::SEMICOLON => return Ok(variable),
+
+                TokenType::NUMBER(t) => {
+                    variable.value = Some(VariableTypeLiteral::Usize(t.parse().unwrap()))
+                }
+
+                TokenType::STRING_LITERAL(t) => {
+                    variable.value = Some(VariableTypeLiteral::String(t.parse().unwrap()))
+                }
+
+                t => {
+                    //println!("T: {:#?}", t);
+                }
             }
         }
 
@@ -138,7 +172,6 @@ impl Parser {
         tokens: Vec<&TokenType>,
     ) -> Result<VariableTypeId, VariableGenerationError> {
         let current_token = tokens[0];
-        println!("Tokens: {:?}, Current Token: {:?}, ", tokens, current_token);
 
         match current_token {
             TokenType::RESULT => Ok(VariableTypeId::Result(Box::new(

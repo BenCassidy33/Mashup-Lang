@@ -1,6 +1,7 @@
 // TODO: Breakout into smaller modules
 use crate::utils::tokens::{Token, TokenType};
 use crate::utils::{SpecialImplmentation, VecU8Impl};
+use crate::SPECIAL_CHARACTERS;
 
 pub struct Lexer<'a> {
     input: &'a String,
@@ -20,7 +21,7 @@ impl TokenMethods for Vec<Token> {
             }
         }
 
-        return None;
+        None
     }
 }
 
@@ -66,7 +67,6 @@ impl<'a> Lexer<'a> {
     */
     pub fn read_to_whitespace_or_special(&mut self) -> (Vec<u8>, Option<()>) {
         let mut characters = Vec::new();
-        let mut loope = 0;
 
         loop {
             let curr = self.char_under_cusor();
@@ -86,7 +86,6 @@ impl<'a> Lexer<'a> {
             characters.push(curr);
             let _ = self.increment_cursor();
         }
-
         let _ = self.increment_cursor();
         (characters, None)
     }
