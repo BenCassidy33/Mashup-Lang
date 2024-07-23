@@ -1,7 +1,6 @@
 // TODO: Breakout into smaller modules
 use crate::utils::tokens::{Token, TokenType};
 use crate::utils::{SpecialImplmentation, VecU8Impl};
-use crate::SPECIAL_CHARACTERS;
 
 pub struct Lexer<'a> {
     input: &'a String,

@@ -1,4 +1,4 @@
-use lang::{parser::parser::Parser, Lexer, Token, TokenType};
+use lang::{parser::parser::Parser, Lexer};
 
 fn main() {
     let tokens = Lexer::new(&mut String::from("let x: Result<Vector<usize>> = 5;")).lex();

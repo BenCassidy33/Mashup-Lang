@@ -2,7 +2,7 @@ use super::{
     constructs,
     variable::{Variable, VariableGenerationError, VariableTypeId, VariableTypeLiteral},
 };
-use crate::{Token, TokenType};
+use crate::{parser::constructs::ConditionType, Token, TokenType};
 
 #[derive(Debug)]
 pub enum BlockScopeError {
@@ -103,7 +103,7 @@ impl Parser {
         };
 
         let mut type_token: Vec<&TokenType> = Vec::new();
-        let mut value: Vec<&TokenType> = Vec::new();
+        let value: Vec<&TokenType> = Vec::new();
 
         let tokens = self.read_to_semicolon();
 
@@ -190,9 +190,18 @@ impl Parser {
         }
     }
 
-    pub fn generate_statement(
+    pub fn generate_statement_condition(
         &mut self,
-    ) -> Result<constructs::Statement, constructs::StatementGenerationError> {
-        todo!("")
+    ) -> Result<constructs::StatementCondition, constructs::StatementGenerationError> {
+        let mut condition = constructs::StatementCondition::default();
+
+        let cond = Self::get_block_scope(self, TokenType::LPAREN, TokenType::RPAREN).unwrap();
+        for token in &cond[1..cond.len() - 1] {
+            match token.token_type {
+                //TokenType::IDENT()
+            }
+        }
+
+        todo!()
     }
 }

@@ -137,14 +137,6 @@ mod paser_tests {
     }
 
     #[test]
-    pub fn generate_result_type() {
-        let tokens = Lexer::new(&mut String::from("Result<usize>")).lex();
-        let mut parser = Parser::new(tokens);
-        let expected = VariableTypeId::Result(Box::new(VariableTypeId::Usize));
-    }
-
-    #[test]
-    #[ignore]
     pub fn generate_statement() {
         let tokens = Lexer::new(&mut String::from(
             r#"

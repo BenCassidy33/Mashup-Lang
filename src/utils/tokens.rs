@@ -1,4 +1,4 @@
-use crate::parser::variable::{VariableGenerationError, VariableTypeId};
+use crate::parser::variable::{VariableTypeId};
 
 pub enum ReadWhitespace {
     EOL,
