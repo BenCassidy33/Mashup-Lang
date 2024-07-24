@@ -47,3 +47,6 @@ pub enum StatementType {
     #[default]
     None,
 }
+
+#[derive(Debug, PartialEq)]
+pub struct Statement {}

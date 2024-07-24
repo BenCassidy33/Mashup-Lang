@@ -197,9 +197,7 @@ impl Parser {
 
         let cond = Self::get_block_scope(self, TokenType::LPAREN, TokenType::RPAREN).unwrap();
         for token in &cond[1..cond.len() - 1] {
-            match token.token_type {
-                //TokenType::IDENT()
-            }
+            println!("Token: {:?}", token);
         }
 
         todo!()
